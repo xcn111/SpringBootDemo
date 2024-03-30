@@ -25,10 +25,10 @@ public class UsersController {
         return usersService.getAllUsers();
     }
 
-    @PostMapping()
-    public void addUser(@RequestParam String username, @RequestParam String password){
-        password=usersService.MD5(password);
-        usersService.addUser(username, password);
+    @PostMapping("/register")
+    public Result addUser(@RequestBody UserDTO userDTO){
+        usersService.addUser(userDTO);
+        return Result.success();
     }
 
     @PostMapping("/login")
@@ -39,8 +39,26 @@ public class UsersController {
     }
 
     @GetMapping("/currentUser")
-    public User GetCurrentUser(HttpServletRequest request){
+    public Result GetCurrentUser(HttpServletRequest request){
         User user=usersService.getUserByName((String)request.getAttribute("username"));
-        return user;
+        return Result.success("user", user);
+    }
+
+    @PostMapping("/delete")
+    public Result DeleteUser(@RequestBody UserDTO userDTO){
+        usersService.DeleteUser(userDTO);
+        return Result.success();
+    }
+
+    @GetMapping("/{username}")
+    public Result SearchUser(@PathVariable String username){
+        User user=usersService.getUserByName(username);
+        return Result.success("user", user);
+    }
+
+    @PostMapping("/change")
+    public Result ChangePassword(@RequestBody UserDTO userDTO){
+        usersService.ChangePassword(userDTO);
+        return Result.success();
     }
 }

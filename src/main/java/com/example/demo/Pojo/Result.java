@@ -24,4 +24,16 @@ public class Result implements Serializable {
         result.msg=msg;
         return result;
     }
+
+    public static  Result error(){
+        Result result=new Result();
+        result.code=0;
+        return result;
+    }
+
+    public static Result success(){
+        Result result=new Result();
+        result.code=1;
+        return result;
+    }
 }

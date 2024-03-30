@@ -11,11 +11,15 @@ import java.util.List;
 
 public interface UsersService {
     List<User> getAllUsers();
-    void addUser(String username, String password);
+    void addUser(UserDTO userDTO);
 
     String MD5(String password);
 
     User login(UserDTO userDTO);
 
     User getUserByName(String username);
+
+    void DeleteUser(UserDTO userDTO);
+
+    void ChangePassword(UserDTO userDTO);
 }

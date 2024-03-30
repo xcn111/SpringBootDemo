@@ -15,8 +15,13 @@ class DemoApplicationTests {
     @Autowired
     private DataSource dataSource;
     @Test
-    void contextLoads() {
-        System.out.println(usersMapper.getByUsername("ShaShaSha"));
+    void contextLoads(){
+        try {
+            usersMapper.addUsers("ShaShaSha", "hfueiwgfew");
+        } catch (Exception e) {
+            System.out.println("feiowghieowgioearger");
+            throw new RuntimeException(e);
+        }
     }
 
 }

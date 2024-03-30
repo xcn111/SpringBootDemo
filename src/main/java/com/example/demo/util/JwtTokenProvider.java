@@ -8,7 +8,7 @@ import java.util.Date;
 @Component
 public class JwtTokenProvider {
 
-    private final String secretKey = "SecretKey"; // 用于签署JWT的密钥，务必保密
+    private final String secretKey = "SecretKey";
 
     // 生成JWT令牌
     public String generateToken(String username) {

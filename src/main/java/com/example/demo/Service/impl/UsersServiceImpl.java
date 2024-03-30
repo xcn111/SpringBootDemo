@@ -5,6 +5,7 @@ import com.example.demo.Pojo.UserDTO;
 import com.example.demo.Service.UsersService;
 import com.example.demo.mapper.UsersMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
 import org.springframework.util.DigestUtils;
 
@@ -22,7 +23,9 @@ public class UsersServiceImpl implements UsersService {
     }
 
     @Override
-    public void addUser(String username, String password) {
+    public void addUser(UserDTO userDTO) {
+        String username=userDTO.getUsername();
+        String password=MD5(userDTO.getPassword());
         usersMapper.addUsers(username, password);
     }
 
@@ -42,8 +45,25 @@ public class UsersServiceImpl implements UsersService {
 
     @Override
     public User getUserByName(String username) {
-        System.out.println(username);
         return usersMapper.getByUsername(username);
+    }
+
+    @Override
+    public void DeleteUser(UserDTO userDTO) {
+        String username=userDTO.getUsername();
+        User user=getUserByName(username);
+        if(user==null) throw new RuntimeException("user not exist");
+        usersMapper.DeleteUser(userDTO);
+    }
+
+    @Override
+    public void ChangePassword(UserDTO userDTO) {
+        String username=userDTO.getUsername();
+        User user=getUserByName(username);
+        if(user==null) throw new RuntimeException("user not exist");
+        String password=MD5(userDTO.getPassword());
+        System.out.println(password);
+        usersMapper.ChangePassword(username, password);
     }
 
 
