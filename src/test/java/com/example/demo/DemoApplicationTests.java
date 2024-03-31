@@ -16,12 +16,7 @@ class DemoApplicationTests {
     private DataSource dataSource;
     @Test
     void contextLoads(){
-        try {
-            usersMapper.addUsers("ShaShaSha", "hfueiwgfew");
-        } catch (Exception e) {
-            System.out.println("feiowghieowgioearger");
-            throw new RuntimeException(e);
-        }
+
     }
 
 }

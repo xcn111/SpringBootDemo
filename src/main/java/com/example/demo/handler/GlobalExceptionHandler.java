@@ -8,12 +8,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 @RestControllerAdvice
 public class GlobalExceptionHandler {
     @ExceptionHandler
-    public Result exceptionhandler(RuntimeException ex){
+    public Result exceptionhandler(RuntimeException ex) {
         return Result.error(ex.getMessage());
     }
-
-//    @ExceptionHandler
-//    public Result exceptionhandler1(DuplicateKeyException ex){
-//        return Result.error(ex.getMessage());
-//    }
 }

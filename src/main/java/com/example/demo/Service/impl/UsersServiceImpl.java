@@ -1,5 +1,6 @@
 package com.example.demo.Service.impl;
 
+import com.example.demo.Pojo.ScoreDTO;
 import com.example.demo.Pojo.User;
 import com.example.demo.Pojo.UserDTO;
 import com.example.demo.Service.UsersService;
@@ -26,7 +27,8 @@ public class UsersServiceImpl implements UsersService {
     public void addUser(UserDTO userDTO) {
         String username=userDTO.getUsername();
         String password=MD5(userDTO.getPassword());
-        usersMapper.addUsers(username, password);
+        int auth=userDTO.getAuth();
+        usersMapper.addUsers(username, password, auth);
     }
 
     @Override
@@ -64,6 +66,17 @@ public class UsersServiceImpl implements UsersService {
         String password=MD5(userDTO.getPassword());
         System.out.println(password);
         usersMapper.ChangePassword(username, password);
+    }
+
+    @Override
+    public void ifAuth(String username) {
+        int auth= usersMapper.findAuth(username);
+        if(auth!=1) throw new RuntimeException("have no authority");
+    }
+
+    @Override
+    public void addScore(ScoreDTO scoreDTO) {
+        usersMapper.addScore(scoreDTO);
     }
 
 

@@ -8,7 +8,7 @@ import java.util.Date;
 @Component
 public class JwtTokenProvider {
 
-    private final String secretKey = "SecretKey";
+    private static final String secretKey = "SecretKey";
 
     // 生成JWT令牌
     public String generateToken(String username) {
@@ -24,7 +24,7 @@ public class JwtTokenProvider {
     }
 
     // 从JWT令牌中解析用户名
-    public String getUsernameFromToken(String token) {
+    public static String getUsernameFromToken(String token) {
         return Jwts.parser()
                 .setSigningKey(secretKey)
                 .parseClaimsJws(token)

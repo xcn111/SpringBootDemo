@@ -4,6 +4,7 @@ import com.example.demo.Pojo.Result;
 import com.example.demo.Pojo.User;
 import com.example.demo.Pojo.UserDTO;
 import com.example.demo.Service.UsersService;
+import com.example.demo.annotation.CurrentUser;
 import com.example.demo.util.JwtTokenProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -21,7 +22,10 @@ public class UsersController {
     @Autowired
     private JwtTokenProvider jwtTokenProvider;
     @GetMapping()
-    public List<User> searchUser(){
+    public List<User> searchUser(@CurrentUser User user){
+        int auth=user.getAuth();
+        if(auth==0) throw new RuntimeException("have no authority");
+        System.out.println(user);
         return usersService.getAllUsers();
     }
 
@@ -38,11 +42,11 @@ public class UsersController {
         return Result.success("token",token);
     }
 
-    @GetMapping("/currentUser")
-    public Result GetCurrentUser(HttpServletRequest request){
-        User user=usersService.getUserByName((String)request.getAttribute("username"));
-        return Result.success("user", user);
-    }
+//    @GetMapping("/currentUser")
+//    public Result GetCurrentUser(HttpServletRequest request){
+//        User user=usersService.getUserByName((String)request.getAttribute("username"));
+//        return Result.success("user", user);
+//    }
 
     @PostMapping("/delete")
     public Result DeleteUser(@RequestBody UserDTO userDTO){
@@ -50,15 +54,15 @@ public class UsersController {
         return Result.success();
     }
 
-    @GetMapping("/{username}")
-    public Result SearchUser(@PathVariable String username){
-        User user=usersService.getUserByName(username);
-        return Result.success("user", user);
-    }
+//    @GetMapping("/{username}")
+//    public Result SearchUser(@PathVariable String username){
+//        User user=usersService.getUserByName(username);
+//        return Result.success("user", user);
+//    }
 
-    @PostMapping("/change")
-    public Result ChangePassword(@RequestBody UserDTO userDTO){
-        usersService.ChangePassword(userDTO);
-        return Result.success();
-    }
+//    @PostMapping("/change")
+//    public Result ChangePassword(@RequestBody UserDTO userDTO){
+//        usersService.ChangePassword(userDTO);
+//        return Result.success();
+//    }
 }

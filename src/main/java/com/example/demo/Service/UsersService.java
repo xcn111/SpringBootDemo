@@ -1,6 +1,7 @@
 package com.example.demo.Service;
 
 
+import com.example.demo.Pojo.ScoreDTO;
 import com.example.demo.Pojo.User;
 import com.example.demo.Pojo.UserDTO;
 import com.example.demo.mapper.UsersMapper;
@@ -22,4 +23,8 @@ public interface UsersService {
     void DeleteUser(UserDTO userDTO);
 
     void ChangePassword(UserDTO userDTO);
+
+    void ifAuth(String username);
+
+    void addScore(ScoreDTO scoreDTO);
 }
