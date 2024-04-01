@@ -25,6 +25,4 @@ public interface UsersService {
     void ChangePassword(UserDTO userDTO);
 
     void ifAuth(String username);
-
-    void addScore(ScoreDTO scoreDTO);
 }

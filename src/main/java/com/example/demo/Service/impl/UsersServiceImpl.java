@@ -4,6 +4,7 @@ import com.example.demo.Pojo.ScoreDTO;
 import com.example.demo.Pojo.User;
 import com.example.demo.Pojo.UserDTO;
 import com.example.demo.Service.UsersService;
+import com.example.demo.mapper.ScoreMapper;
 import com.example.demo.mapper.UsersMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DuplicateKeyException;
@@ -18,6 +19,9 @@ public class UsersServiceImpl implements UsersService {
 
     @Autowired
     private UsersMapper usersMapper;
+
+    @Autowired
+    private ScoreMapper scoreMapper;
     @Override
     public List<User> getAllUsers() {
         return usersMapper.findUsers();
@@ -73,11 +77,5 @@ public class UsersServiceImpl implements UsersService {
         int auth= usersMapper.findAuth(username);
         if(auth!=1) throw new RuntimeException("have no authority");
     }
-
-    @Override
-    public void addScore(ScoreDTO scoreDTO) {
-        usersMapper.addScore(scoreDTO);
-    }
-
 
 }

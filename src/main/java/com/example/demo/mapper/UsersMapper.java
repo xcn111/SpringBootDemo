@@ -26,7 +26,4 @@ public interface UsersMapper {
     void ChangePassword(@Param("username") String username, @Param("password") String password);
     @Select("select auth from user where username=#{username}")
     int findAuth(@Param("username") String username);
-
-    @Insert("insert into score (username, Math, Chinese, English) values (#{username}, #{math}, #{chinese}, #{english})")
-    void addScore(ScoreDTO scoreDTO);
 }
