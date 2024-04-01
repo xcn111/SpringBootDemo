@@ -9,6 +9,7 @@ import com.example.demo.mapper.UsersMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.DigestUtils;
 
 import java.util.List;
@@ -28,11 +29,13 @@ public class UsersServiceImpl implements UsersService {
     }
 
     @Override
+    @Transactional
     public void addUser(UserDTO userDTO) {
         String username=userDTO.getUsername();
         String password=MD5(userDTO.getPassword());
         int auth=userDTO.getAuth();
         usersMapper.addUsers(username, password, auth);
+//        int a=1/0;
     }
 
     @Override
@@ -55,6 +58,7 @@ public class UsersServiceImpl implements UsersService {
     }
 
     @Override
+    @Transactional
     public void DeleteUser(UserDTO userDTO) {
         String username=userDTO.getUsername();
         User user=getUserByName(username);
@@ -63,6 +67,7 @@ public class UsersServiceImpl implements UsersService {
     }
 
     @Override
+    @Transactional
     public void ChangePassword(UserDTO userDTO) {
         String username=userDTO.getUsername();
         User user=getUserByName(username);

@@ -4,10 +4,10 @@ import com.example.demo.Pojo.Result;
 import com.example.demo.Pojo.ScoreDTO;
 import com.example.demo.Pojo.User;
 import com.example.demo.Service.ScoreService;
-import com.example.demo.Service.UsersService;
 import com.example.demo.annotation.Authority;
 import com.example.demo.annotation.CurrentUser;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
@@ -18,6 +18,7 @@ public class ScoreController {
     ScoreService scoreService;
     @PostMapping("/add")
     @Authority
+    @Transactional
     public Result addScore(@CurrentUser User user, @RequestBody ScoreDTO scoreDTO){
         scoreService.addScore(scoreDTO);
         return Result.success();
@@ -25,6 +26,7 @@ public class ScoreController {
 
     @PostMapping("/addlist")
     @Authority
+    @Transactional
     public Result addScoreList(@CurrentUser User user, @RequestBody List<ScoreDTO> scoreDTO){
         scoreService.addScoreList(scoreDTO);
         return Result.success();
