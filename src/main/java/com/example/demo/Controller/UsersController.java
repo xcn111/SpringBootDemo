@@ -8,12 +8,15 @@ import com.example.demo.annotation.Authority;
 import com.example.demo.annotation.CurrentUser;
 import com.example.demo.util.JwtTokenProvider;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 @RestController
 @RequestMapping("/user")
@@ -22,6 +25,8 @@ public class UsersController {
     private UsersService usersService;
     @Autowired
     private JwtTokenProvider jwtTokenProvider;
+    @Autowired
+    RedisTemplate redisTemplate;
     @GetMapping()
     @Authority
     public List<User> searchUser(@CurrentUser User user){
@@ -61,5 +66,10 @@ public class UsersController {
         if(!username.equals(userDTO.getUsername())) throw new RuntimeException("can not change the password");
         usersService.ChangePassword(userDTO);
         return Result.success();
+    }
+
+    @GetMapping("/test")
+    public UserDTO Test(){
+        return null;
     }
 }

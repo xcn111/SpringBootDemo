@@ -8,6 +8,7 @@ import com.example.demo.mapper.ScoreMapper;
 import com.example.demo.mapper.UsersMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DuplicateKeyException;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.DigestUtils;
@@ -23,6 +24,9 @@ public class UsersServiceImpl implements UsersService {
 
     @Autowired
     private ScoreMapper scoreMapper;
+
+    @Autowired
+    RedisTemplate redisTemplate;
     @Override
     public List<User> getAllUsers() {
         return usersMapper.findUsers();
@@ -54,7 +58,17 @@ public class UsersServiceImpl implements UsersService {
 
     @Override
     public User getUserByName(String username) {
-        return usersMapper.getByUsername(username);
+        User user=(User) redisTemplate.opsForValue().get(username);
+        if(user==null) {
+            synchronized (this.getClass()) {
+                user = (User) redisTemplate.opsForValue().get(username);
+                if (user == null) {
+                    user = usersMapper.getByUsername(username);
+                    redisTemplate.opsForValue().set(username, user);
+                }
+            }
+        }
+        return user;
     }
 
     @Override

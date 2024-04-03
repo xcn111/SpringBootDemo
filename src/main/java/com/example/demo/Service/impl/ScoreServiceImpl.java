@@ -5,6 +5,7 @@ import com.example.demo.Pojo.User;
 import com.example.demo.Service.ScoreService;
 import com.example.demo.mapper.ScoreMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -30,6 +31,7 @@ public class ScoreServiceImpl implements ScoreService {
     }
 
     @Override
+    @Cacheable("0")
     public List<ScoreDTO> getScoreByUsername(String username) {
         return scoreMapper.findScoreByName(username);
     }
